@@ -10,6 +10,9 @@ After using MLLMGuard for quick inference, a series of `json` files will be gene
 
 ## Download GuardRank
 
+You can download **GuardRank** from [Hugging Face](https://huggingface.co/Carol0110/GuardRank).
+
+
 ## Set up the Configuration File
 
 You need to set up the configuration file `eval.yaml` to perform the scoring. The following describes the meaning of each configuration item:
