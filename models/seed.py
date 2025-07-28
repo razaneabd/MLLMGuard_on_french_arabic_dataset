@@ -26,11 +26,11 @@ class SeedLLaMA8B(Mllm):
             low_cpu_mem_usage = True   
         ).eval().to(self.device)
         self.tokenizer = SeedLlamaTokenizer.from_pretrained(
-            pretrained_model_name_or_path = "/mnt/cachenew/gutianle/AILab-CVC/seed-tokenizer-2",
+            pretrained_model_name_or_path = "/content/seed-tokenizer-2",
             fp16 = True,
             load_diffusion = False,
-            encoder_url = "/mnt/cachenew/gutianle/AILab-CVC/seed-tokenizer-2/seed_quantizer.pt",
-            diffusion_path = "/mnt/cachenew/gutianle/stabilityai/stable-diffusion-2-1-unclip",
+            encoder_url = "/content/seed-tokenizer-2/seed_quantizer.pt",
+            diffusion_path = "/content/stable-diffusion-2-1-unclip"
             device = self.device,
             legacy = False
         )
