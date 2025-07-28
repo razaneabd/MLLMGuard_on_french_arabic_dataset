@@ -195,7 +195,7 @@ def par_on_noise_injection(args, dimension):
 
 def par_on_position_swapping(args, dimension):
     print('PAR on Position-swapping...')
-    files = glob.glob(f'{dimension}/*.xlsx')
+    files = glob.glob(f'{args.save_dir}/{dimension}/*.xlsx')
     result_list = []
     for file in files:
         info = parse_file_name(file)
@@ -276,16 +276,30 @@ def main():
     args = OmegaConf.load('eval.yaml')
     args.dimensions = args.dimensions.split(' ')
     args.models = args.models.split(' ')
-    
-    if args.dimensions[0] == 'all':
-        args.dimensions = ['privacy', 'bias', 'toxicity', 'noise-injection', 'position-swapping', 'hallucination', 'legality']
-        score_all(args)
-        par_all(args)
-        return
-    
+
     for dim in args.dimensions:
-        score_on_open_domain(args, dim)
-        par_all(args)
-    
+        print(f"\n[bold cyan]--- Dimension: {dim.upper()} ---[/bold cyan]")
+        if dim in ['privacy', 'bias', 'legality', 'toxicity', 'hallucination']:
+            acc_results = score_on_open_domain(args, dim)
+            par_results = par_on_open_domain(args, dim)
+        elif dim == 'position-swapping':
+            acc_results = score_on_position_swapping(args, dim)
+            par_results = par_on_position_swapping(args, dim)
+        elif dim == 'noise-injection':
+            acc_results = score_on_noise_injection(args, dim)
+            par_results = par_on_noise_injection(args, dim)
+        else:
+            print(f"[red]Unknown dimension:[/red] {dim}")
+            continue 
+
+        acc_dict = {res['model_name']: res for res in acc_results if res is not None}
+        par_dict = {res['model_name']: res for res in par_results if res is not None}
+
+
+        for model in args.models:
+            acc = acc_dict.get(model, {}).get('acc', 'N/A')
+            par = par_dict.get(model, {}).get('par', 'N/A')
+            print(f"[green]Model:[/green] {model.ljust(15)}  [yellow]ASR:[/yellow] {acc}  [magenta]PAR:[/magenta] {par}")
+
 if __name__ == "__main__":
     main()
