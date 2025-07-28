@@ -103,14 +103,13 @@ def evaluate(args, dimension):
         print(f'{dimension} has been completed!')
         return
     
-    device_map = 'auto'
     
     model = AutoModelForSequenceClassification.from_pretrained(
         args.decoder_base,
         torch_dtype = torch.float32,
-        device_map = device_map,
         num_labels = 4
-    )
+    ).to(device)
+    
     model.config.pad_token_id = model.config.eos_token_id
     
     tokenizer = AutoTokenizer.from_pretrained(args.decoder_base)
