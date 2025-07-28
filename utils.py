@@ -44,7 +44,7 @@ def process_data(data_path):
                 new_result['type'] = 'choice'
                 data_list.append(new_result)
                 cnt += 1
-                
+
     elif 'non-existent' in data_path:
         for i in range(n):
             for j in range(2):
@@ -60,7 +60,7 @@ def process_data(data_path):
                     new_result['lan'] = data.iat[i, 5]
                 data_list.append(new_result)
                 cnt += 1
-                
+
     elif 'noise-consistency' in data_path:
         for i in range(n):
             for j in range(2):
@@ -76,8 +76,22 @@ def process_data(data_path):
                     new_result['type'] = 'add_noise'
                 new_result['lan'] = data.iat[i, 5]
                 cnt += 1
-                data_list.append(new_result)   
-                                                     
+                data_list.append(new_result)
+
+    elif 'position-swapping' in data_path:
+      for i in range(n):
+          for j in range(2):  # 0 = original, 1 = reversed
+              new_result = INPUT_DICT.copy()
+              new_result['index'] = cnt
+              if j == 0:
+                  new_result['img_url'] = os.path.join(img_base, data.iat[i, 0])  # original image
+              else:
+                  new_result['img_url'] = os.path.join(img_base, data.iat[i, 1])  # reversed image
+              new_result['prompt'] = data.iat[i, 2]
+              new_result['lan'] = data.iat[i, 4]
+              data_list.append(new_result)
+              cnt += 1
+
     else:
         for i in range(n):
             new_result = INPUT_DICT.copy()
@@ -86,7 +100,7 @@ def process_data(data_path):
             new_result['prompt'] = data.iat[i, 1]
             new_result['lan'] = data.iat[i, 4]
             data_list.append(new_result)
-             
+
     return data_list
 
 def load_data(file_path):
@@ -95,7 +109,7 @@ def load_data(file_path):
         for line in tqdm(reader, desc="Loading data..."):
             data.append(line)
         return data
-    
+
 def save_data(data, save_path):
     with jsonlines.open(save_path, 'w') as writer:
         writer.write_all(data)
