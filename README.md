@@ -1,3 +1,11 @@
+In this github repository we did some modifications to the original MLLMGuard code:
+- We added a data_fr_ar folder that contains translated prompts in arabic and french in each dimension.
+- We created MLLMGuard_on_french_arabic_dataset.ipynb to run the safety evaluation suite.
+- We edited the following files:
+  - MLLMGuard/guardrank/decoder.py
+  - 
+
+
 # MLLMGuard
 
 MLLMGuard is a multi-dimensional safety evaluation suite for MLLMs, including a bilingual
