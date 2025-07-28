@@ -4,6 +4,7 @@ In this github repository we did some modifications to the original MLLMGuard co
 - We edited the following files:
   - MLLMGuard/guardrank/decoder.py
   - 
+  - MLLMGuard/guardrank/eval.yaml
 
 
 # MLLMGuard
