@@ -30,7 +30,7 @@ class SeedLLaMA8B(Mllm):
             fp16 = True,
             load_diffusion = False,
             encoder_url = "/content/seed-tokenizer-2/seed_quantizer.pt",
-            diffusion_path = "/content/stable-diffusion-2-1-unclip"
+            diffusion_path = "/content/stable-diffusion-2-1-unclip",
             device = self.device,
             legacy = False
         )
